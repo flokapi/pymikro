@@ -14,13 +14,13 @@ maschine = pymikro.MaschineMikroMk3()
 # control LEDs
 lState = {
     'button': {
-        'stop': {'val': 1},
+        'stop': {'val': 1}
     },
     'strip': {
-        1: {'val': 4, 'color': 'blue'},
+        1: {'val': 4, 'color': 'blue'}
     },
     'pad': {
-        1: {'val': 3, 'color': 'purple'},
+        1: {'val': 3, 'color': 'purple'}
     }
 }
 maschine.setLights(lState)
@@ -175,27 +175,27 @@ LEDs:
 - Example:
 
   ```python
-  maschine.setLights({})						# set empty dictionary to disable all LEDs
+  maschine.setLights({})                         # set empty dictionary to disable all LEDs
   maschine.updLights()
   
   time.sleep(1)
   
   lState = {
       'button': {
-          'stop': {'val': 1},					# Button brighness value must be between 0 
+          'stop': {'val': 1},                    # Button brighness value must be between 0 
       },
       'strip': {
-          1: {'val': 4, 'color': 'blue'}, 	# Touch Strip LED brightness value must be between 0 and 3
+          1: {'val': 4, 'color': 'blue'}         # Touch Strip LED brightness value must be between 0 and 3
       },
       'pad': {
-          1: {'val': 3, 'color': 'purple'},	# Pad brightness value must be between 0 and 3
+          1: {'val': 3, 'color': 'purple'}       # Pad brightness value must be between 0 and 3
       }
   }
   maschine.setLights(lState)
   
-  maschine.setLight('pad', 6, 3, 'orange')	# pad nb 6, brightness 3. 
-  maschine.setLight('strip', 5, 3, 'green')	# strip led nb 5, brightness 3.
-  maschine.setLight('button', 'notes', 4)		# button 'notes', brightness 4.
+  maschine.setLight('pad', 6, 3, 'orange')       # pad nb 6, brightness 3. 
+  maschine.setLight('strip', 5, 3, 'green')      # strip led nb 5, brightness 3.
+  maschine.setLight('button', 'notes', 4)        # button 'notes', brightness 4.
   maschine.updLights()
   ```
 
@@ -206,10 +206,10 @@ Screen
 - Example
 
   ```python
-  maschine.setScreen("Hello", 24)						# Font size set to 24
+  maschine.setScreen("Hello", 24)                       # Font size set to 24
   
-  maschine.setScreen(f"Hello World!\nIt's working") 	# Printing text on both lines with '\n'. 
-  													# Default font size is 14
+  maschine.setScreen(f"Hello World!\nIt's working")     # Printing text on both lines with '\n'. 
+                                                        # Default font size is 14
   ```
 
 
@@ -224,12 +224,12 @@ Pads
 
   ```python
   {
-  	'cmd': 'pad', 
-  	'pad_nb': 5, 
-  	'pad_val': 1360, 								# between 0 and 4095
-  	'touched': True, 								# finger in contact with the pad
-  	'pressed': False, 								# finger just pressed the pad (not 100% reliable)
-  	'released': False								# finger just released the pad (not 100% reliable)
+      'cmd': 'pad', 
+      'pad_nb': 5, 
+      'pad_val': 1360,                                 # between 0 and 4095
+      'touched': True,                                 # finger in contact with the pad
+      'pressed': False,                                # finger just pressed the pad (not 100% reliable)
+      'released': False                                # finger just released the pad (not 100% reliable)
   }
   ```
 
@@ -243,13 +243,13 @@ Buttons:
 
   ```python
   {
-  	'cmd': 'btn', 
-  	'btn_pressed': ['group', 'pattern', 'enter'], 	# currently pressed buttons
-  	'encoder_pos': 10,								# byte, cyclic value between 0 and 15
-      'encoder_move': 1, 								# encoded moved to the right (+1) or left (-1)
-  	'encoder_touched': True,						# finger in conctac with the encoder
-  	'strip_pos_1': 123, 							# value of the strip if one finger touching
-  	'strip_pos_2': 0								# second value if another finger is on the strip
+      'cmd': 'btn', 
+      'btn_pressed': ['group', 'pattern', 'enter'],   # currently pressed buttons
+      'encoder_pos': 10,                              # byte, cyclic value between 0 and 15
+      'encoder_move': 1,                              # encoded moved to the right (+1) or left (-1)
+      'encoder_touched': True,                        # finger in conctac with the encoder
+      'strip_pos_1': 123,                             # value of the strip if one finger touching
+      'strip_pos_2': 0                                # second value if another finger is on the strip
   }
   ```
 
