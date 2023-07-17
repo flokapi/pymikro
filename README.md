@@ -17,7 +17,7 @@ lState = {
         'stop': {'val': 1}
     },
     'strip': {
-        1: {'val': 4, 'color': 'blue'}
+        1: {'val': 3, 'color': 'blue'}
     },
     'pad': {
         1: {'val': 3, 'color': 'purple'}
@@ -182,7 +182,7 @@ LEDs:
   
   lState = {
       'button': {
-          'stop': {'val': 1},                    # Button brighness value must be between 0 
+          'stop': {'val': 1}                     # Button brighness value must be between 0 
       },
       'strip': {
           1: {'val': 4, 'color': 'blue'}         # Touch Strip LED brightness value must be between 0 and 3
@@ -216,6 +216,14 @@ Screen
 
 #### Outputs
 
+Output commands can be read in a nonblocking way using the `readCmd` method, which returns:
+
+- `None` if no new command is available
+- A dictionary which content differs depending on the `cmd` key value (`btn` or `pad`)
+- Example: `cmd = maschine.readCmd()`
+
+
+
 Pads
 
 - The pad command is only sent when the state of a pad is being changed (pressed/touched/released). The pad command is sent for a single pad at the time.
@@ -247,7 +255,7 @@ Buttons:
       'btn_pressed': ['group', 'pattern', 'enter'],   # currently pressed buttons
       'encoder_pos': 10,                              # byte, cyclic value between 0 and 15
       'encoder_move': 1,                              # encoded moved to the right (+1) or left (-1)
-      'encoder_touched': True,                        # finger in conctac with the encoder
+      'encoder_touched': True,                        # finger in contact with the encoder
       'strip_pos_1': 123,                             # value of the strip if one finger touching
       'strip_pos_2': 0                                # second value if another finger is on the strip
   }
