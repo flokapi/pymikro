@@ -45,8 +45,6 @@ while True:
 
 
 
-
-
 # Setup
 
 ### Linux
@@ -59,19 +57,10 @@ sudo apt-get install libhidapi-hidraw0
 
 
 
-Install the hid package
+Install the package
 
 ```
-pip3 install hid
-```
-
-
-
-Clone the repository
-
-```
-git clone https://github.com/flokapi/pymikro.git
-cd pymikro
+pip3 install pymikro
 ```
 
 
@@ -79,6 +68,8 @@ cd pymikro
 Set permissions for the device
 
 ```
+cd /tmp
+wget https://raw.githubusercontent.com/flokapi/pymikro/main/50-ni-maschine.rules
 sudo cp 50-ni-maschine.rules /etc/udev/rules.d/
 ```
 
@@ -101,16 +92,7 @@ Install the hid driver:
 Install the hid package
 
 ```
-pip install hid
-```
-
-
-
-Clone the repository from Git Bash. Alternatively, download and extract the files manually
-
-```
-git clone https://github.com/flokapi/pymikro.git
-cd pymikro
+pip3 install pymikro
 ```
 
 
@@ -163,6 +145,17 @@ Should also work on OSX by installing the hid api. See https://pypi.org/project/
 
 
 ### API
+
+#### Connection
+
+```python
+import pymikro
+
+maschine = pymikro.MaschineMikroMk3()
+maschine.showConnInfo()
+```
+
+
 
 #### Inputs
 
@@ -261,7 +254,8 @@ Buttons:
   }
   ```
 
-  
+
+
 
 ### Alternatives
 
