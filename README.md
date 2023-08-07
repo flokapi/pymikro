@@ -89,7 +89,7 @@ Install the hid driver:
 
 
 
-Install the hid package
+Install the package
 
 ```
 pip3 install pymikro
