@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "pymikro"
+version = "0.0.16"
+description = "API to control the Maschine Mikro MK3"
+authors = ["flokapi <flokapi@pm.me>"]
+license = "LGPL-3.0-only"
+readme = "README.md"
+
+packages = [
+    { include = "pymikro", from = "src" },
+]
+
+[tool.poetry.urls]
+homepage = "https://github.com/flokapi/pymikro"
+repository = "https://github.com/flokapi/pymikro"
+documentation = "https://github.com/flokapi/pymikro"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+hid = "*"
+pillow = "*" 
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+float_to_top = true
