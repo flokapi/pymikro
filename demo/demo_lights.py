@@ -58,7 +58,7 @@ def demoLights(maschine):
 	for color in maschine.settings['color'][1:]:
 		for brightness in [3, 2, 1, 0]:
 			for padNb in range(16):
-				maschine.setLight('pad', padNb+1, brightness, color)
+				maschine.setLight('pad', padNb, brightness, color)
 			for stripLedNb in range(25):
 				maschine.setLight('strip', stripLedNb, brightness, color)
 

@@ -1,3 +1,5 @@
+# About
+
 Python module to control the Maschine Mikro MK3. It allows you to use this maschine not only to create music, but also to control a home automation or a robot or any other creative stuff.
 
 It uses directly the USB HID protocol, as a result there is no dependency on a product specific driver and it can run on any operating system. Furthermore, this gives you access to the full capabilities of this hardware which makes it even more fun to use.
