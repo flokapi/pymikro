@@ -1,5 +1,3 @@
-
-
 import pymikro
 import time
 
@@ -19,10 +17,10 @@ class AnimatedGraph:
         self.maschine = pymikro.MaschineMikroMk3()
 
     def initGraph(self):
-        style.use('fivethirtyeight')
+        style.use("fivethirtyeight")
 
         fig = plt.figure()
-        self.ax1 = fig.add_subplot(1,1,1)
+        self.ax1 = fig.add_subplot(1, 1, 1)
 
         ani = animation.FuncAnimation(fig, self.animate, interval=1)
         plt.show()
@@ -30,9 +28,9 @@ class AnimatedGraph:
     def updateBuf(self):
         count = 0
         while True:
-            cmd = self.maschine.readCmd()
-            if cmd and cmd['cmd'] == 'pad':
-                self.buf.append(cmd['pad_val'])
+            cmd = self.maschine.read_cmd()
+            if cmd and cmd["cmd"] == "pad":
+                self.buf.append(cmd["pad_val"])
 
                 if len(self.buf) > 500:
                     self.buf.pop(0)
@@ -51,7 +49,6 @@ class AnimatedGraph:
         self.ax1.plot(xs, ys)
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     graph = AnimatedGraph()
+

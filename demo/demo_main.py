@@ -1,47 +1,47 @@
-
-
 import pymikro
-import time
 
 
-
-def demoLights(maschine):
+def demo_lights(maschine):
     state = {
-        'button': {
-            'stop': {'val': 1},
+        "button": {
+            "stop": {"val": 1},
         },
-        'strip': {
-            1: {'val': 3, 'color': 'blue'},
+        "strip": {
+            1: {"val": 3, "color": "blue"},
         },
-        'pad': {
-            1: {'val': 3, 'color': 'purple'},
-        }
+        "pad": {
+            1: {"val": 3, "color": "purple"},
+        },
     }
-    maschine.setLights(state)
+    maschine.lights.set_all(state)
 
-    maschine.setLight('pad', 6, 3, 'orange')
-    maschine.setLight('strip', 5, 3, 'green')
-    maschine.setLight('button', 'notes', 3)
-    maschine.updLights()
-
-
-def demoScreen(maschine):
-    maschine.setScreen("Hello World!\nIt's working")
+    maschine.lights.set("pad", 6, 3, "orange")
+    maschine.lights.set("strip", 5, 3, "green")
+    maschine.lights.set("button", "notes", 3)
+    maschine.lights.update()
 
 
-def demoBtnPad(maschine):
+def demo_screen(maschine):
+    maschine.screen.set("Hello World!\nIt's working")
+
+
+def demo_btn_pad(maschine):
     while True:
-        cmd = maschine.readCmd()
+        cmd = maschine.read_cmd()
         if cmd:
-            if cmd['cmd'] == 'pad':
-                print('Pad number {} pressed with value: {}'.format(cmd['pad_nb'], cmd['pad_val']))
-            if cmd['cmd'] == 'btn':
-                print('Buttons pressed: {}'.format(cmd['btn_pressed']))
+            if cmd["cmd"] == "pad":
+                print(
+                    "Pad number {} pressed with value: {}".format(
+                        cmd["pad_nb"], cmd["pad_val"]
+                    )
+                )
+            if cmd["cmd"] == "btn":
+                print("Buttons pressed: {}".format(cmd["btn_pressed"]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     maschine = pymikro.MaschineMikroMk3()
 
-    demoLights(maschine)
-    demoScreen(maschine)
-    demoBtnPad(maschine)
+    demo_lights(maschine)
+    demo_screen(maschine)
+    demo_btn_pad(maschine)

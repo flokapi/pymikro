@@ -28,19 +28,19 @@ lState = {
         1: {'val': 3, 'color': 'purple'}
     }
 }
-maschine.setLights(lState)
+maschine.lights.set_all(lState)
 
-maschine.setLight('pad', 6, 3, 'orange')
-maschine.setLight('strip', 5, 3, 'green')
-maschine.setLight('button', 'notes', 4)
-maschine.updLights()
+maschine.lights.set('pad', 6, 3, 'orange')
+maschine.lights.set('strip', 5, 3, 'green')
+maschine.lights.set('button', 'notes', 4)
+maschine.lights.update()
 
 # control screen
-maschine.setScreen("Hello World!\nIt's working")
+maschine.screen.set("Hello World!\nIt's working")
 
 # get button and pad updates
 while True:
-    cmd = maschine.readCmd()
+    cmd = maschine.read_cmd()
     if cmd:
         if cmd['cmd'] == 'pad':
             print('Pad number {} pressed: {}'.format(cmd['pad_nb'], cmd['pad_val']))
@@ -138,7 +138,7 @@ Should also work on OSX by installing the hid api. See
 import pymikro
 
 maschine = pymikro.MaschineMikroMk3()
-maschine.showConnInfo()
+maschine.hid.show_info()
 ```
 
 #### Inputs
@@ -146,19 +146,19 @@ maschine.showConnInfo()
 LEDs:
 
 - The state of the LEDs for the pads/touch strip/buttons is defined in a single
-  data-structure which can be accessed and modified using the `getLights`
-  and`setLights` methods. The LEDs can also be set individually using
-  `setLight`.
+  data-structure which can be accessed and modified using the `lights.get_all`
+  and `lights.set_all` methods. The LEDs can also be set individually using
+  `lights.set`.
 
-- To apply the changes, `updLights` must be called. Using a separate command
+- To apply the changes, `lights.update` must be called. Using a separate command
   allows to apply all the changes in a single write procedure (about 15ms) and
   increases the reactivity.
 
 - Example:
 
   ```python
-  maschine.setLights({})                         # set empty dictionary to disable all LEDs
-  maschine.updLights()
+  maschine.lights.set_all({})                         # set empty dictionary to disable all LEDs
+  maschine.lights.update()
 
   time.sleep(1)
 
@@ -173,12 +173,12 @@ LEDs:
           1: {'val': 3, 'color': 'purple'}       # Pad brightness value must be between 0 and 3
       }
   }
-  maschine.setLights(lState)
+  maschine.lights.set_all(lState)
 
-  maschine.setLight('pad', 6, 3, 'orange')       # pad nb 6, brightness 3.
-  maschine.setLight('strip', 5, 3, 'green')      # strip led nb 5, brightness 3.
-  maschine.setLight('button', 'notes', 4)        # button 'notes', brightness 4.
-  maschine.updLights()
+  maschine.lights.set('pad', 6, 3, 'orange')       # pad nb 6, brightness 3.
+  maschine.lights.set('strip', 5, 3, 'green')      # strip led nb 5, brightness 3.
+  maschine.lights.set('button', 'notes', 4)        # button 'notes', brightness 4.
+  maschine.lights.update()
   ```
 
 Screen
@@ -186,21 +186,21 @@ Screen
 - Example
 
   ```python
-  maschine.setScreen("Hello", 24)                       # Font size set to 24
+  maschine.screen.set("Hello", 24)                       # Font size set to 24
 
-  maschine.setScreen(f"Hello World!\nIt's working")     # Printing text on both lines with '\n'.
+  maschine.screen.set(f"Hello World!\nIt's working")     # Printing text on both lines with '\n'.
                                                         # Default font size is 14
   ```
 
 #### Outputs
 
-Output commands can be read in a nonblocking way using the `readCmd` method,
+Output commands can be read in a non-blocking way using the `read_cmd` method,
 which returns:
 
 - `None` if no new command is available
 - A dictionary which content differs depending on the `cmd` key value (`btn` or
   `pad`)
-- Example: `cmd = maschine.readCmd()`
+- Example: `cmd = maschine.read_cmd()`
 
 Pads
 
