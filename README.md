@@ -1,12 +1,15 @@
-# About
+# Pymikro
 
-Python module to control the Maschine Mikro MK3. It allows you to use this maschine not only to create music, but also to control a home automation or a robot or any other creative stuff.
+Python module to control the Maschine Mikro MK3. It allows you to use this
+maschine not only to create music, but also to control a home automation or a
+robot or any other creative stuff.
 
-It uses directly the USB HID protocol, as a result there is no dependency on a product specific driver and it can run on any operating system. Furthermore, this gives you access to the full capabilities of this hardware which makes it even more fun to use.
+It uses directly the USB HID protocol, as a result there is no dependency on a
+product specific driver and it can run on any operating system. Furthermore,
+this gives you access to the full capabilities of this hardware which makes it
+even more fun to use.
 
-
-
-# Usage
+## Usage
 
 ```python
 import pymikro
@@ -45,71 +48,55 @@ while True:
             print('Buttons pressed: {}'.format(cmd['btn_pressed']))
 ```
 
-
-
-# Setup
+## Setup
 
 ### Linux
 
 Install the hid driver
 
-```
+```bash
 sudo apt-get install libhidapi-hidraw0
 ```
 
-
-
 Install the package
 
-```
+```bash
 pip3 install pymikro
 ```
 
-
-
 Set permissions for the device
 
-```
+```bash
 cd /tmp
 wget https://raw.githubusercontent.com/flokapi/pymikro/main/50-ni-maschine.rules
 sudo cp 50-ni-maschine.rules /etc/udev/rules.d/
 ```
 
-
-
 Plug or re-plug the maschine mikro USB cable.
-
-
 
 ### Windows
 
 Install the hid driver:
 
-1. Donwload the latest version of `hidapi-win.zip` from https://github.com/libusb/hidapi/releases
+1. Donwload the latest version of `hidapi-win.zip` from
+   <https://github.com/libusb/hidapi/releases>
 
-2. Extract the zip file and copy the `hidapi.dll` corresponding to your architecture to `C:\Users\<Username>\AppData\Local\Programs\Python`
-
-
+2. Extract the zip file and copy the `hidapi.dll` corresponding to your
+   architecture to `C:\Users\<Username>\AppData\Local\Programs\Python`
 
 Install the package
 
-```
+```bash
 pip3 install pymikro
 ```
 
-
-
 Plug or re-plug the maschine mikro USB cable.
 
-
-
-# About
+## About
 
 ### Supported hardware features
 
 Overall, there is actually more feature than the manufacturer uses :)
-
-
 
 Pads:
 
@@ -136,15 +123,12 @@ Screen:
 
 - set text with adjustable size, on 1 or 2 lines
 
-
-
 ### Supported operating systems
 
-Tested on Linux &  Windows
+Tested on Linux & Windows
 
-Should also work on OSX by installing the hid api. See https://pypi.org/project/hid/
-
-
+Should also work on OSX by installing the hid api. See
+<https://pypi.org/project/hid/>
 
 ### API
 
@@ -157,27 +141,30 @@ maschine = pymikro.MaschineMikroMk3()
 maschine.showConnInfo()
 ```
 
-
-
 #### Inputs
 
 LEDs:
 
-- The state of the LEDs for the pads/touch strip/buttons is defined in a single data-structure which can be accessed and modified using the  `getLights`  and`setLights` methods. The LEDs can also be set individually using `setLight`.
+- The state of the LEDs for the pads/touch strip/buttons is defined in a single
+  data-structure which can be accessed and modified using the `getLights`
+  and`setLights` methods. The LEDs can also be set individually using
+  `setLight`.
 
-- To apply the changes, `updLights` must be called. Using a separate command allows to apply all the changes in a single write procedure (about 15ms) and increases the reactivity.
+- To apply the changes, `updLights` must be called. Using a separate command
+  allows to apply all the changes in a single write procedure (about 15ms) and
+  increases the reactivity.
 
 - Example:
 
   ```python
   maschine.setLights({})                         # set empty dictionary to disable all LEDs
   maschine.updLights()
-  
+
   time.sleep(1)
-  
+
   lState = {
       'button': {
-          'stop': {'val': 1}                     # Button brighness value must be between 0 
+          'stop': {'val': 1}                     # Button brighness value must be between 0
       },
       'strip': {
           1: {'val': 4, 'color': 'blue'}         # Touch Strip LED brightness value must be between 0 and 3
@@ -187,14 +174,12 @@ LEDs:
       }
   }
   maschine.setLights(lState)
-  
-  maschine.setLight('pad', 6, 3, 'orange')       # pad nb 6, brightness 3. 
+
+  maschine.setLight('pad', 6, 3, 'orange')       # pad nb 6, brightness 3.
   maschine.setLight('strip', 5, 3, 'green')      # strip led nb 5, brightness 3.
   maschine.setLight('button', 'notes', 4)        # button 'notes', brightness 4.
   maschine.updLights()
   ```
-
-  
 
 Screen
 
@@ -202,33 +187,33 @@ Screen
 
   ```python
   maschine.setScreen("Hello", 24)                       # Font size set to 24
-  
-  maschine.setScreen(f"Hello World!\nIt's working")     # Printing text on both lines with '\n'. 
+
+  maschine.setScreen(f"Hello World!\nIt's working")     # Printing text on both lines with '\n'.
                                                         # Default font size is 14
   ```
 
-
-
 #### Outputs
 
-Output commands can be read in a nonblocking way using the `readCmd` method, which returns:
+Output commands can be read in a nonblocking way using the `readCmd` method,
+which returns:
 
 - `None` if no new command is available
-- A dictionary which content differs depending on the `cmd` key value (`btn` or `pad`)
+- A dictionary which content differs depending on the `cmd` key value (`btn` or
+  `pad`)
 - Example: `cmd = maschine.readCmd()`
-
-
 
 Pads
 
-- The pad command is only sent when the state of a pad is being changed (pressed/touched/released). The pad command is sent for a single pad at the time.
+- The pad command is only sent when the state of a pad is being changed
+  (pressed/touched/released). The pad command is sent for a single pad at the
+  time.
 
 - Example
 
   ```python
   {
-      'cmd': 'pad', 
-      'pad_nb': 5, 
+      'cmd': 'pad',
+      'pad_nb': 5,
       'pad_val': 1360,                                 # between 0 and 4095
       'touched': True,                                 # finger in contact with the pad
       'pressed': False,                                # finger just pressed the pad (not 100% reliable)
@@ -236,17 +221,17 @@ Pads
   }
   ```
 
-  
-
 Buttons:
 
-- The button command is only sent when the state of the buttons/touch strip/encoder changed (including button release). The command contains the full state of the button group.
+- The button command is only sent when the state of the buttons/touch
+  strip/encoder changed (including button release). The command contains the
+  full state of the button group.
 
 - Example
 
   ```python
   {
-      'cmd': 'btn', 
+      'cmd': 'btn',
       'btn_pressed': ['group', 'pattern', 'enter'],   # currently pressed buttons
       'encoder_pos': 10,                              # byte, cyclic value between 0 and 15
       'encoder_move': 1,                              # encoded moved to the right (+1) or left (-1)
@@ -256,9 +241,6 @@ Buttons:
   }
   ```
 
-
-
-
 ### Alternatives
 
 [maschine-mikro-mk3-driver](https://github.com/r00tman/maschine-mikro-mk3-driver)
@@ -267,12 +249,11 @@ Buttons:
 - Makes the Maschine Mikro available through a midi interface
 - Coded in Rust
 
-
-
 Midi mode
 
 - Windows/OSX only (midi interface emulated by the driver)
 
 - press `shift` and `project` to enter midi mode
-- you can use [mido](https://pypi.org/project/mido/ ) or any other software to handle the midi commands
+- you can use [mido](https://pypi.org/project/mido/) or any other software to
+  handle the midi commands
 - limited features/customization
