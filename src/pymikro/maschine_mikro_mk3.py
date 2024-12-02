@@ -19,8 +19,10 @@ class MaschineMikroMk3:
     screen: Screen
 
     def __init__(self) -> None:
-        self.lights_state = {}
-        self._load_settings(SETTINGS_FILE_NAME)
+        settings_file_path = self._get_path(SETTINGS_FILE_NAME)
+        font_file_path = self._get_path(FONT_FILE_NAME)
+
+        self._load_settings(settings_file_path)
 
         vid, pid = self.settings["vid"], self.settings["pid"]
         self.hid = HidDevice(vid, pid)
@@ -28,15 +30,14 @@ class MaschineMikroMk3:
         self.buttons = Buttons(self.settings["button"]["order"])
         self.pads = Pads(self.settings["pad"]["order"])
         self.lights = Lights(self.settings, self.hid)
-        self.screen = Screen(self.hid, self._get_path(FONT_FILE_NAME))
+        self.screen = Screen(self.hid, font_file_path)
 
-    def _load_settings(self, fileName: str) -> None:
-        filePath = self._get_path(fileName)
-        with open(filePath) as f:
+    def _get_path(self, file_name_) -> str:
+        return os.path.join(os.path.dirname(__file__), file_name_)
+
+    def _load_settings(self, file_path_: str) -> None:
+        with open(file_path_) as f:
             self.settings = json.load(f)
-
-    def _get_path(self, fileName) -> str:
-        return os.path.join(os.path.dirname(__file__), fileName)
 
     def read_cmd(self) -> dict | None:
         rawCmd = self.hid.read()

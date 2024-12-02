@@ -2,10 +2,7 @@ import pymikro
 
 
 def demo_pads_btns(maschine):
-    maschine.lights.set_all({})
-    maschine.lights.update()
-
-    # maschine.lights.set_light("button", "stop", 3)
+    maschine.lights.set("button", "stop", 3)
     maschine.lights.update()
 
     while True:
